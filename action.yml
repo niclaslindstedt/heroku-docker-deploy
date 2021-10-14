@@ -1,35 +1,39 @@
-name: "Build, Push and Release a Docker container to Heroku."
-author: "Kamil Klyta"
-description: "Build, Push and Release a Docker container to Heroku."
+name: 'Build, Push and Release a Docker container to Heroku.'
+author: 'Kamil Klyta'
+description: 'Build, Push and Release a Docker container to Heroku.'
 inputs:
   heroku_app_name:
-    description: "Name of the heroku application to which the build is to be sent."
+    description: 'Name of the heroku application to which the build is to be sent.'
     required: true
   email:
-    description: "The email address associated with your Heroku account."
+    description: 'The email address associated with your Heroku account.'
     required: true
   heroku_api_key:
     description: "Heroku API key associated with provided user's email."
     required: true
   dockerfile_directory:
-    description: "Dockerfile directory."
+    description: 'Dockerfile directory.'
     required: true
-    default: "./"
+    default: './'
   dockerfile_name:
-    description: "Dockerfile name. [default=Dockerfile]"
+    description: 'Dockerfile name. [default=Dockerfile]'
     required: false
-    default: "Dockerfile"
+    default: 'Dockerfile'
   docker_options:
-    description: "Additional options of docker build command"
+    description: 'Additional options of docker build command'
     required: false
-    default: ""
+    default: ''
   process_type:
-    description: "Select process type for wich you want docker container to be uploaded. [default=web]"
+    description: 'Select process type for wich you want docker container to be uploaded. [default=web]'
     required: false
-    default: "web"
+    default: 'web'
+  context:
+    description: 'Select where the Docker context is. [default=.]'
+    required: false
+    default: '.'
 branding:
   icon: server
   color: purple
 runs:
-  using: "node12"
-  main: "dist/index.js"
+  using: 'node12'
+  main: 'dist/index.js'

@@ -1,15 +1,16 @@
 import * as core from '@actions/core';
-import { loginToHeroku } from './heroku/login_to_heroku';
+import assert from 'assert';
+import path from 'path';
 import { buildDockerImage } from './heroku/build_docker_image';
+import { loginToHeroku } from './heroku/login_to_heroku';
 import { pushDockerContainer } from './heroku/push_docker_container';
 import { releaseDockerContainer } from './heroku/release_docker_container';
-import assert from 'assert';
 import { assertDirExists, assertFileExists, getCwdFromPath } from './utils';
-import path from 'path';
 
 const DEFAULT_DOCKERFILE_NAME = 'Dockerfile';
 const DEFAULT_PROCESS_TYPE = 'web';
 const DEFAULT_DOCKER_OPTIONS = '';
+const DEFAULT_DOCKER_CONTEXT = '.';
 
 (async () => {
   try {
@@ -20,6 +21,7 @@ const DEFAULT_DOCKER_OPTIONS = '';
     const dockerfileName = core.getInput('dockerfile_name') || DEFAULT_DOCKERFILE_NAME;
     const dockerOptions = core.getInput('docker_options') || DEFAULT_DOCKER_OPTIONS;
     const processType = core.getInput('process_type') || DEFAULT_PROCESS_TYPE;
+    const context = core.getInput('context') || DEFAULT_DOCKER_CONTEXT;
 
     assert(email, 'Missing required field: `email`.');
     assert(herokuApiKey, 'Missing required field: `heroku_api_key`.');
@@ -45,6 +47,7 @@ const DEFAULT_DOCKER_OPTIONS = '';
       herokuAppName,
       cwd,
       processType,
+      context,
     });
     if (!built) return;
 
